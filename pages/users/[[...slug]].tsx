@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-// import "tailwindcss/tailwind.css";
 import axios from "axios";
 import { Pagination } from "../../components/Pagination";
 import { SearchWidget } from "../../components/SearchWidget";
@@ -22,21 +21,13 @@ import { User, GetUsers } from "../../type";
       const pageNum: number = pageToNum - 1;
       const skip = pageNum * limit;
 
-      const config: {
-        string: string;
-        params: { limit: number; skip: number };
-      } = {
-        params: {
-          limit,
-          skip,
-        },
-        string: "",
-      };
-
       const getUsers = async (): Promise<GetUsers> => {
         const response = await axios.get(
-          process.env.NEXT_PUBLIC_BASE_API_URL as string,
-          config
+          process.env.NEXT_PUBLIC_BASE_API_URL as string, {
+            params: { limit, skip },
+            string: "",
+          }
+
         );
         setUsers(response.data.users);
         setTotal(response.data.total);

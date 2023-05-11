@@ -7,32 +7,32 @@ import clsx from "clsx";
 import { GetUsers } from "../type";
 
 export const SearchWidget = () =>{
-  const [query, setQuery] = useState<string>("");
+  const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [selectedResult, setSelectedResult] = useState<null | number>(null);
   const [widgetIsActive, setWidgetIsActive] = useState(false);
   const inputRef = useRef(null);
   const router = useRouter();
-  const limit: number = 10;
-  const skip: number = 0;
-  const config: {
-    string: string;
-    params: { limit: number; skip: number };
-  } = {
-    params: {
-      limit,
-      skip,
-    },
-    string: "",
-  };
+  // const limit: number = 10;
+  // const skip: number = 0;
+  // const config: {
+  //   string: string;
+  //   params: { limit: number; skip: number };
+  // } = {
+  //   params: {
+  //     limit,
+  //     skip,
+  //   },
+  //   string: "",
+  // };
 
   useEffect(() => {
     const getUsers = async (): Promise<GetUsers> => {
       if (query.length < 1 && widgetIsActive) {
-        const response = await axios.get(
-          process.env.NEXT_PUBLIC_BASE_API_URL as string,
-          config
-        );
+        const response = await axios.get(process.env.NEXT_PUBLIC_BASE_API_URL as string, {
+          params: { limit: 10, skip: 0 },
+          string: "",
+        });
         setResults(response.data.users);
         setSelectedResult(-1);
         return;
@@ -100,7 +100,7 @@ export const SearchWidget = () =>{
           </div>
         </div>
 
-        {!!results.length && widgetIsActive && (
+        {results.length && widgetIsActive && (
           <ul className="absolute w-52 z-10 top-full left-0 right-0 bg-white border rounded-md overflow-hidden">
             {results.map(({ id, firstName, lastName }, index) => (
               <li key={id}>

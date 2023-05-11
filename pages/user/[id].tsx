@@ -1,35 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-// import "tailwindcss/tailwind.css";
+import React from "react";
+import { GetServerSideProps, NextPage } from "next";
 import axios from "axios";
-import { User, Address, GetUser } from "../../type";
+import { UserProps } from "../../type";
 import Image from "next/image";
 
- const User=() =>{
-  const [user, setUser] = useState<User | undefined>(undefined);
-  const router = useRouter();
-
-  const { id: page } = router.query;
-
-  useEffect(() => {
-    if (page) {
-      const getUser = async (): Promise<GetUser> => {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_BASE_API_URL}/${page}`
-        );
-        setUser(response.data);
-        return { user: response.data };
-      };
-
-      getUser().catch((error) => {
-        console.error(error);
-      });
-    }
-  }, [page]);
+const UserPage: NextPage<UserProps> = ({ user, error }) => {
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
     <>
-      {!!user && (
+      {user && (
         <div className="flex items-center justify-center h-screen w-full drop-shadow-md ">
           <div className="max-w-7xl w-full flex drop-shadow-md gap-6">
             <div>
@@ -58,6 +40,22 @@ import Image from "next/image";
       )}
     </>
   );
-}
+};
 
-export default User
+export const getServerSideProps: GetServerSideProps<UserProps> = async (
+  context
+) => {
+  const { id: userId } = context.query;
+
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}/${userId}`
+    );
+    const user = response.data;
+    return { props: { user } };
+  } catch (error) {
+    return { props: { error: error.message } };
+  }
+};
+
+export default UserPage;

@@ -18,11 +18,11 @@ export type Address = {
   state: string;
 };
 
-export type GetUser = {
-  user: User;
-};
+// export type GetUser = {
+//   user: User;
+// };
 
-export type PaginationProps = {
-  currentPage: number;
-  total: number;
-};
+export type UserProps = {
+  user?: User;
+  error?: string;
+}
