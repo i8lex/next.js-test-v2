@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import axios from "axios";
-import { Pagination } from "../../components/Pagination";
-import { SearchWidget } from "../../components/SearchWidget";
-import Image from "next/image";
-import Link from "next/link";
-import { User, GetUsers } from "../../type";
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import axios from 'axios';
+import { Pagination } from '../../components/Pagination';
+import { SearchWidget } from '../../components/SearchWidget';
+import Image from 'next/image';
+import Link from 'next/link';
+import { User, GetUsers } from '../../type';
 
- const Users = () => {
+const Users = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [total, setTotal] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -23,11 +23,11 @@ import { User, GetUsers } from "../../type";
 
       const getUsers = async (): Promise<GetUsers> => {
         const response = await axios.get(
-          process.env.NEXT_PUBLIC_BASE_API_URL as string, {
+          process.env.NEXT_PUBLIC_BASE_API_URL as string,
+          {
             params: { limit, skip },
-            string: "",
-          }
-
+            string: '',
+          },
         );
         setUsers(response.data.users);
         setTotal(response.data.total);
@@ -42,18 +42,18 @@ import { User, GetUsers } from "../../type";
   }, [page]);
 
   return (
-    <div className="p-8 flex flex-col">
+    <div className="h-screen flex flex-col p-20 bg-white">
       <SearchWidget />
-      <div className="mb-12">
+      <div className="mb-12 flex-1">
         <ul className="grid gap-6 grid-cols-5 grid-rows-2">
           {users.map(({ id, firstName, lastName, image }) => (
             <li
               key={id}
-              className="py-4 flex flex-col justify-center items-center border rounded-lg p-8 drop-shadow-md hover:saturate-200 hover:scale-105"
+              className="py-4 px-6 flex flex-col justify-center items-center border border-gray-200 rounded-lg p-8 drop-shadow-md hover:saturate-200 hover:scale-105 w-full"
             >
               <Link
                 href={`/user/${id}`}
-                className="flex flex-wrap items-center flex-col"
+                className="flex flex-wrap items-center flex-col w-full"
               >
                 <Image
                   priority="normal"
@@ -79,6 +79,6 @@ import { User, GetUsers } from "../../type";
       <Pagination currentPage={currentPage} total={total} />
     </div>
   );
-}
+};
 
-export default Users
+export default Users;

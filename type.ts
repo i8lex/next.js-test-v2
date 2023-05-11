@@ -25,4 +25,4 @@ export type Address = {
 export type UserProps = {
   user?: User;
   error?: string;
-}
+};

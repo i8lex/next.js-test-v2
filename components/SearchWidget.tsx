@@ -1,13 +1,13 @@
-import { MdSearch } from "react-icons/md";
-import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import clsx from "clsx";
-import { GetUsers } from "../type";
+import { MdSearch } from 'react-icons/md';
+import axios from 'axios';
+import React, { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import clsx from 'clsx';
+import { GetUsers } from '../type';
 
-export const SearchWidget = () =>{
-  const [query, setQuery] = useState("");
+export const SearchWidget = () => {
+  const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [selectedResult, setSelectedResult] = useState<null | number>(null);
   const [widgetIsActive, setWidgetIsActive] = useState(false);
@@ -29,17 +29,20 @@ export const SearchWidget = () =>{
   useEffect(() => {
     const getUsers = async (): Promise<GetUsers> => {
       if (query.length < 1 && widgetIsActive) {
-        const response = await axios.get(process.env.NEXT_PUBLIC_BASE_API_URL as string, {
-          params: { limit: 10, skip: 0 },
-          string: "",
-        });
+        const response = await axios.get(
+          process.env.NEXT_PUBLIC_BASE_API_URL as string,
+          {
+            params: { limit: 10, skip: 0 },
+            string: '',
+          },
+        );
         setResults(response.data.users);
         setSelectedResult(-1);
         return;
       }
       if (query.length > 0 && widgetIsActive) {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_BASE_API_URL}/search?q=${query}`
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/search?q=${query}`,
         );
         setResults(response.data.users);
         setSelectedResult(-1);
@@ -55,18 +58,18 @@ export const SearchWidget = () =>{
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event && event.key === "ArrowDown") {
+    if (event && event.key === 'ArrowDown') {
       event.preventDefault();
       setSelectedResult((prev) =>
-        prev !== null ? Math.min(prev + 1, results.length - 1) : null
+        prev !== null ? Math.min(prev + 1, results.length - 1) : null,
       );
-    } else if (event.key === "ArrowUp") {
+    } else if (event.key === 'ArrowUp') {
       event.preventDefault();
 
       setSelectedResult((prev) =>
-        prev !== null ? Math.max(prev - 1, 0) : null
+        prev !== null ? Math.max(prev - 1, 0) : null,
       );
-    } else if (event.key === "Enter" && selectedResult !== null) {
+    } else if (event.key === 'Enter' && selectedResult !== null) {
       event.preventDefault();
       const user = results[selectedResult] as { id: string };
       router.push(`/user/${user.id}`);
@@ -107,8 +110,8 @@ export const SearchWidget = () =>{
                 <Link
                   href={`/user/${id}`}
                   className={clsx(
-                    "block px-4 py-2 hover:bg-gray-100 border rounded-md",
-                    selectedResult === index && "bg-gray-100"
+                    'block px-4 py-2 hover:bg-gray-100 border rounded-md',
+                    selectedResult === index && 'bg-gray-100',
                   )}
                 >
                   {firstName} {lastName}
@@ -120,4 +123,4 @@ export const SearchWidget = () =>{
       </div>
     </div>
   );
-}
+};

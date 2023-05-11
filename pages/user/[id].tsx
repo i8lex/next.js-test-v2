@@ -1,8 +1,8 @@
-import React from "react";
-import { GetServerSideProps, NextPage } from "next";
-import axios from "axios";
-import { UserProps } from "../../type";
-import Image from "next/image";
+import React from 'react';
+import { GetServerSideProps, NextPage } from 'next';
+import axios from 'axios';
+import { UserProps } from '../../type';
+import Image from 'next/image';
 
 const UserPage: NextPage<UserProps> = ({ user, error }) => {
   if (error) {
@@ -12,7 +12,7 @@ const UserPage: NextPage<UserProps> = ({ user, error }) => {
   return (
     <>
       {user && (
-        <div className="flex items-center justify-center h-screen w-full drop-shadow-md ">
+        <div className="flex items-center justify-center h-screen w-full drop-shadow-md bg-white">
           <div className="max-w-7xl w-full flex drop-shadow-md gap-6">
             <div>
               <Image
@@ -28,9 +28,11 @@ const UserPage: NextPage<UserProps> = ({ user, error }) => {
               <p className="text-8xl font-large text-gray-900">
                 {user.firstName}
               </p>
+
               <p className="text-8xl font-large text-gray-900 mb-16">
                 {user.lastName}
               </p>
+
               <p className="text-5xl font-medium text-gray-400">{`${user.address.address},`}</p>
               <p className="text-5xl font-medium text-gray-400">{`${user.address.postalCode} ${user.address.city}`}</p>
               <p className="text-5xl font-medium text-gray-400">{`${user.address.state}, USA`}</p>
@@ -43,13 +45,13 @@ const UserPage: NextPage<UserProps> = ({ user, error }) => {
 };
 
 export const getServerSideProps: GetServerSideProps<UserProps> = async (
-  context
+  context,
 ) => {
   const { id: userId } = context.query;
 
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}/${userId}`
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}/${userId}`,
     );
     const user = response.data;
     return { props: { user } };
