@@ -76,7 +76,11 @@ const Users = () => {
           ))}
         </ul>
       </div>
-      <Pagination currentPage={currentPage} total={total} />
+      <Pagination
+        currentPage={currentPage}
+        totalCountOfUser={total}
+        limit={limit}
+      />
     </div>
   );
 };

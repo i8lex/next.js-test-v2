@@ -5,47 +5,46 @@ import { MdArrowForward, MdArrowBack } from 'react-icons/md';
 
 type PaginationProps = {
   currentPage: number;
+  totalCountOfUser: number;
+  limit: number;
 };
 
-export const Pagination: FC<PaginationProps> = ({ currentPage }) => {
-  const countOfPages: number = 10;
-
-  // const totalPages = Number(total) / Number(limit);
+export const Pagination: FC<PaginationProps> = ({
+  currentPage,
+  totalCountOfUser,
+  limit: limitUserOnPage,
+}) => {
+  const countOfPages: number = Math.ceil(totalCountOfUser / limitUserOnPage);
 
   const getPaginationData = (currentPage, countOfPages) => {
     const ellipsis: string = '...';
+    if (countOfPages <= 7) {
+      return Array.from({ length: countOfPages }, (_, i) => ++i);
+    }
 
     if (currentPage <= 3) {
       return [
-        ...Array.from({ length: countOfPages / 2 }, (_: number, i) => ++i),
+        ...Array.from({ length: 5 }, (_, i) => ++i),
         ellipsis,
         countOfPages,
       ];
     }
 
-    if (
-      currentPage >= countOfPages / 2 - 1 &&
-      currentPage <= countOfPages / 2 + 1
-    ) {
+    if (currentPage >= countOfPages - 2) {
       return [
         1,
         ellipsis,
-        ...Array.from({ length: 3 }, (_: number, i) => currentPage + i),
-        ellipsis,
-        countOfPages,
+        ...Array.from({ length: 5 }, (_, i) => countOfPages - 4 + i),
       ];
     }
 
-    if (currentPage >= 5) {
-      return [
-        1,
-        ellipsis,
-        ...Array.from(
-          { length: countOfPages / 2 },
-          (_, i) => countOfPages / 2 + 1 + i,
-        ),
-      ];
-    }
+    return [
+      1,
+      ellipsis,
+      ...Array.from({ length: 3 }, (_, i) => currentPage + i),
+      ellipsis,
+      countOfPages,
+    ];
   };
 
   const paginationData = getPaginationData(currentPage, countOfPages);
@@ -54,7 +53,7 @@ export const Pagination: FC<PaginationProps> = ({ currentPage }) => {
     <nav>
       <div className="flex gap-2 justify-center">
         <Link
-          href={`/users?page=${Math.max(currentPage, 0)}`}
+          href={`/users?page=${Math.max(currentPage, 1)}`}
           className="w-10 h-10 flex items-center justify-center border rounded-md text-base"
         >
           <MdArrowBack />
