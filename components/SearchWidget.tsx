@@ -13,18 +13,6 @@ export const SearchWidget = () => {
   const [widgetIsActive, setWidgetIsActive] = useState(false);
   const inputRef = useRef(null);
   const router = useRouter();
-  // const limit: number = 10;
-  // const skip: number = 0;
-  // const config: {
-  //   string: string;
-  //   params: { limit: number; skip: number };
-  // } = {
-  //   params: {
-  //     limit,
-  //     skip,
-  //   },
-  //   string: "",
-  // };
 
   useEffect(() => {
     const getUsers = async (): Promise<GetUsers> => {
