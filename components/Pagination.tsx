@@ -2,6 +2,7 @@ import Link from 'next/link';
 import React, { FC } from 'react';
 import clsx from 'clsx';
 import { MdArrowForward, MdArrowBack } from 'react-icons/md';
+import { getPaginationData } from '../utils/paginationUtils';
 
 type PaginationProps = {
   currentPage: number;
@@ -16,46 +17,25 @@ export const Pagination: FC<PaginationProps> = ({
 }) => {
   const countOfPages: number = Math.ceil(totalCountOfUser / limitUserOnPage);
 
-  const getPaginationData = (currentPage, countOfPages) => {
-    const ellipsis: string = '...';
-
-    if (currentPage <= 3) {
-      return [
-        ...Array.from({ length: 5 }, (_, i) => ++i),
-        ellipsis,
-        countOfPages,
-      ];
-    }
-
-    if (currentPage >= countOfPages - 2) {
-      return [
-        1,
-        ellipsis,
-        ...Array.from({ length: 5 }, (_, i) => countOfPages - 4 + i),
-      ];
-    }
-
-    return [
-      1,
-      ellipsis,
-      ...Array.from({ length: 3 }, (_, i) => currentPage + i),
-      ellipsis,
-      countOfPages,
-    ];
-  };
-
   const paginationData = getPaginationData(currentPage, countOfPages);
 
   return (
     <nav>
       <div className="flex gap-2 justify-center">
-        <Link
-          href={`/users?page=${Math.max(currentPage, 1)}`}
-          className="w-10 h-10 flex items-center justify-center border rounded-md text-base"
-        >
-          <MdArrowBack />
-        </Link>
-        {paginationData.map((pageNumber, index) => (
+        {currentPage === 0 ? (
+          <div className="w-10 h-10 flex items-center justify-center border rounded-md text-base">
+            <MdArrowBack />
+          </div>
+        ) : (
+          <Link
+            href={`/users?page=${Math.max(currentPage, 1)}`}
+            className="w-10 h-10 flex items-center justify-center border rounded-md text-base"
+          >
+            <MdArrowBack />
+          </Link>
+        )}
+
+        {paginationData.items.map((pageNumber, index) => (
           <div className="inline-block w-10" key={index}>
             {pageNumber !== '...' ? (
               <Link
@@ -76,12 +56,21 @@ export const Pagination: FC<PaginationProps> = ({
             )}
           </div>
         ))}
-        <Link
-          href={`/users?page=${Math.min(currentPage + 2, countOfPages)}`}
-          className="w-10 h-10 flex items-center justify-center border rounded-md text-base"
-        >
-          <MdArrowForward />
-        </Link>
+        {currentPage === countOfPages - 1 ? (
+          <div
+            href={`/users?page=${Math.min(currentPage + 2, countOfPages)}`}
+            className="w-10 h-10 flex items-center justify-center border rounded-md text-base"
+          >
+            <MdArrowForward />
+          </div>
+        ) : (
+          <Link
+            href={`/users?page=${Math.min(currentPage + 2, countOfPages)}`}
+            className="w-10 h-10 flex items-center justify-center border rounded-md text-base"
+          >
+            <MdArrowForward />
+          </Link>
+        )}
       </div>
     </nav>
   );

@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import clsx from 'clsx';
 import { GetUsers } from '../type';
 import { User } from '../type';
-import { FaInstalod } from 'react-icons/all';
+
 export const SearchWidget = () => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<Array<User>>([]);
