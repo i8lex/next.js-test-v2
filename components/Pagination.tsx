@@ -18,9 +18,6 @@ export const Pagination: FC<PaginationProps> = ({
 
   const getPaginationData = (currentPage, countOfPages) => {
     const ellipsis: string = '...';
-    if (countOfPages <= 7) {
-      return Array.from({ length: countOfPages }, (_, i) => ++i);
-    }
 
     if (currentPage <= 3) {
       return [

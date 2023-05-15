@@ -5,11 +5,12 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import clsx from 'clsx';
 import { GetUsers } from '../type';
-
+import { User } from '../type';
+import { FaInstalod } from 'react-icons/all';
 export const SearchWidget = () => {
   const [query, setQuery] = useState('');
-  const [results, setResults] = useState([]);
-  const [selectedResult, setSelectedResult] = useState<null | number>(null);
+  const [results, setResults] = useState<Array<User>>([]);
+  const [selectedResult, setSelectedResult] = useState(0);
   const [widgetIsActive, setWidgetIsActive] = useState(false);
   const inputRef = useRef(null);
   const router = useRouter();
@@ -25,7 +26,7 @@ export const SearchWidget = () => {
           },
         );
         setResults(response.data.users);
-        setSelectedResult(-1);
+
         return;
       }
       if (query.length > 0 && widgetIsActive) {
@@ -33,31 +34,23 @@ export const SearchWidget = () => {
           `${process.env.NEXT_PUBLIC_BASE_API_URL}/search?q=${query}`,
         );
         setResults(response.data.users);
-        setSelectedResult(-1);
       }
       return;
     };
-    getUsers().catch(console.error);
+    getUsers();
   }, [query, widgetIsActive]);
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-    setQuery(value);
-  };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event && event.key === 'ArrowDown') {
       event.preventDefault();
       setSelectedResult((prev) =>
-        prev !== null ? Math.min(prev + 1, results.length - 1) : null,
+        prev !== -1 ? Math.min(prev + 1, results.length - 1) : -1,
       );
     } else if (event.key === 'ArrowUp') {
       event.preventDefault();
 
-      setSelectedResult((prev) =>
-        prev !== null ? Math.max(prev - 1, 0) : null,
-      );
-    } else if (event.key === 'Enter' && selectedResult !== null) {
+      setSelectedResult((prev) => (prev !== -1 ? Math.max(prev - 1, 0) : -1));
+    } else if (event.key === 'Enter' && selectedResult !== -1) {
       event.preventDefault();
       const user = results[selectedResult] as { id: string };
       router.push(`/user/${user.id}`);
@@ -71,7 +64,7 @@ export const SearchWidget = () => {
           <input
             type="text"
             value={query}
-            onChange={handleInputChange}
+            onChange={(event) => setQuery(event.target.value)}
             onKeyDown={handleKeyDown}
             onBlur={() => {
               setTimeout(() => {
@@ -91,23 +84,23 @@ export const SearchWidget = () => {
           </div>
         </div>
 
-        {results.length && widgetIsActive && (
+        {results.length && widgetIsActive ? (
           <ul className="absolute w-52 z-10 top-full left-0 right-0 bg-white border rounded-md overflow-hidden">
-            {results.map(({ id, firstName, lastName }, index) => (
-              <li key={id}>
+            {results.map((user, index) => (
+              <li key={index}>
                 <Link
-                  href={`/user/${id}`}
+                  href={`/user/${user.id}`}
                   className={clsx(
                     'block px-4 py-2 hover:bg-gray-100 border rounded-md',
                     selectedResult === index && 'bg-gray-100',
                   )}
                 >
-                  {firstName} {lastName}
+                  {user.firstName} {user.lastName}
                 </Link>
               </li>
             ))}
           </ul>
-        )}
+        ) : null}
       </div>
     </div>
   );

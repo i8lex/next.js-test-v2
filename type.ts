@@ -18,11 +18,7 @@ export type Address = {
   state: string;
 };
 
-// export type GetUser = {
-//   user: User;
-// };
-
-export type UserProps = {
+export type UserPageProps = {
   user?: User;
   error?: string;
 };
