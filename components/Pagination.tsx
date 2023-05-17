@@ -6,17 +6,13 @@ import { getPaginationData } from '../utils/paginationUtils';
 
 type PaginationProps = {
   currentPage: number;
-  totalCountOfUser: number;
-  limit: number;
+  countOfPages: number;
 };
 
 export const Pagination: FC<PaginationProps> = ({
   currentPage,
-  totalCountOfUser,
-  limit: limitUserOnPage,
+  countOfPages,
 }) => {
-  const countOfPages: number = Math.ceil(totalCountOfUser / limitUserOnPage);
-
   const paginationData = getPaginationData(currentPage, countOfPages);
 
   return (

@@ -27,7 +27,7 @@ const UserPage: React.FC<UserPageProps> = ({ user, error }) => {
 
   return (
     <>
-      {user && (
+      {user ? (
         <div className="flex items-center justify-center h-screen w-full drop-shadow-md bg-white">
           <div className="max-w-7xl w-full flex drop-shadow-md gap-6">
             <div>
@@ -54,7 +54,7 @@ const UserPage: React.FC<UserPageProps> = ({ user, error }) => {
             </div>
           </div>
         </div>
-      )}
+      ) : null}
     </>
   );
 };

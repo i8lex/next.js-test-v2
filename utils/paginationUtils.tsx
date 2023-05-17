@@ -46,31 +46,3 @@ export const getPaginationData = (
 
   return res;
 };
-
-// const getPaginationData = (currentPage, countOfPages) => {
-//   const ellipsis: string = '...';
-//
-//   if (currentPage <= 3) {
-//     return [
-//       ...Array.from({ length: 5 }, (_, i) => ++i),
-//       ellipsis,
-//       countOfPages,
-//     ];
-//   }
-//
-//   if (currentPage >= countOfPages - 2) {
-//     return [
-//       1,
-//       ellipsis,
-//       ...Array.from({ length: 5 }, (_, i) => countOfPages - 4 + i),
-//     ];
-//   }
-//
-//   return [
-//     1,
-//     ellipsis,
-//     ...Array.from({ length: 3 }, (_, i) => currentPage + i),
-//     ellipsis,
-//     countOfPages,
-//   ];
-// };

@@ -9,7 +9,7 @@ import { User } from '../type';
 
 export const SearchWidget = () => {
   const [query, setQuery] = useState('');
-  const [results, setResults] = useState<Array<User>>([]);
+  const [results, setResults] = useState<Array<User[]>>([]);
   const [selectedResult, setSelectedResult] = useState(0);
   const [widgetIsActive, setWidgetIsActive] = useState(false);
   const inputRef = useRef(null);
@@ -87,12 +87,12 @@ export const SearchWidget = () => {
         {results.length && widgetIsActive ? (
           <ul className="absolute w-52 z-10 top-full left-0 right-0 bg-white border rounded-md overflow-hidden">
             {results.map((user, index) => (
-              <li key={index}>
+              <li key={user.id}>
                 <Link
                   href={`/user/${user.id}`}
                   className={clsx(
                     'block px-4 py-2 hover:bg-gray-100 border rounded-md',
-                    selectedResult === index && 'bg-gray-100',
+                    selectedResult === index ? 'bg-gray-100' : null,
                   )}
                 >
                   {user.firstName} {user.lastName}
