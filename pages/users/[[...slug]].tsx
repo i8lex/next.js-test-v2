@@ -16,17 +16,16 @@ const Users = () => {
   const pageToNum = Number(page);
   const limitUserOnPage = 10;
   const countOfPages: number = Math.ceil(totalCountOfUser / limitUserOnPage);
+
   useEffect(() => {
     if (page) {
       const pageNum: number = pageToNum - 1;
       const skipUsersOnApi = pageNum * limitUserOnPage;
-
       const getUsers = async (): Promise<GetUsers> => {
         const response = await axios.get(
           process.env.NEXT_PUBLIC_BASE_API_URL as string,
           {
-            params: { limit: limitUserOnPage, skipUsersOnApi },
-            string: '',
+            params: { limit: limitUserOnPage, skip: skipUsersOnApi },
           },
         );
         setUsers(response.data.users);
@@ -35,9 +34,7 @@ const Users = () => {
         return { users: response.data.users, total: response.data.total };
       };
 
-      getUsers().catch((error) => {
-        console.error(error);
-      });
+      getUsers();
     }
   }, [page]);
 
@@ -56,7 +53,7 @@ const Users = () => {
                 className="flex flex-wrap items-center flex-col w-full"
               >
                 <Image
-                  priority="normal"
+                  priority={true}
                   src={user.image}
                   alt={`${user.firstName} ${user.lastName}`}
                   width={150}
@@ -76,7 +73,11 @@ const Users = () => {
           ))}
         </ul>
       </div>
-      <Pagination currentPage={currentPage} countOfPages={countOfPages} />
+      <Pagination
+        currentPage={currentPage}
+        countOfPages={countOfPages}
+        pageToNum={pageToNum}
+      />
     </div>
   );
 };

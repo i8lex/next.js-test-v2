@@ -7,13 +7,15 @@ import { getPaginationData } from '../utils/paginationUtils';
 type PaginationProps = {
   currentPage: number;
   countOfPages: number;
+  pageToNum: number;
 };
 
 export const Pagination: FC<PaginationProps> = ({
   currentPage,
   countOfPages,
+  pageToNum,
 }) => {
-  const paginationData = getPaginationData(currentPage, countOfPages);
+  const paginationData = getPaginationData(pageToNum, countOfPages);
 
   return (
     <nav>

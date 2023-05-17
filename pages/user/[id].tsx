@@ -15,9 +15,7 @@ export const getServerSideProps: GetServerSideProps<UserPageProps> = async (
     );
     const user = response.data;
     return { props: { user } };
-  } catch (error) {
-    return { props: { error: error.message } };
-  }
+  } catch (error) {}
 };
 
 const UserPage: React.FC<UserPageProps> = ({ user, error }) => {
@@ -32,7 +30,7 @@ const UserPage: React.FC<UserPageProps> = ({ user, error }) => {
           <div className="max-w-7xl w-full flex drop-shadow-md gap-6">
             <div>
               <Image
-                priority="normal"
+                priority={true}
                 src={user.image}
                 alt={`${user.firstName} ${user.lastName}`}
                 width={600}

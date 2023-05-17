@@ -31,7 +31,7 @@ export const SearchWidget = () => {
       }
       if (query.length > 0 && widgetIsActive) {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_BASE_API_URL}/search?q=${query}`,
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/search?q=${query}&limit=10`,
         );
         setResults(response.data.users);
       }

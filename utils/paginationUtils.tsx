@@ -22,8 +22,8 @@ export const getPaginationData = (
     items.push('...');
   }
 
-  const r1 = currentPageNumber - 2;
-  const r2 = currentPageNumber + 2;
+  const r1 = currentPageNumber - 1;
+  const r2 = currentPageNumber + 1;
 
   for (let i = Math.max(r1, 2); i <= Math.min(pageCount, r2); i++) {
     items.push(i);
@@ -43,6 +43,5 @@ export const getPaginationData = (
     next: next,
     items: items,
   };
-
   return res;
 };
