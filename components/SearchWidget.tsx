@@ -6,9 +6,11 @@ import { useRouter } from 'next/router';
 import clsx from 'clsx';
 import { GetUsers } from '../types';
 import { User } from '../types';
+import { useDebounceValue } from '../hooks/useDebounceValue';
 
 export const SearchWidget = () => {
   const [query, setQuery] = useState('');
+  const debouncedQuery = useDebounceValue(query, 500);
   const [results, setResults] = useState<Array<User[]>>([]);
   const [selectedResult, setSelectedResult] = useState(0);
   const [widgetIsActive, setWidgetIsActive] = useState(false);
@@ -29,7 +31,7 @@ export const SearchWidget = () => {
 
         return;
       }
-      if (query.length > 0 && widgetIsActive) {
+      if (debouncedQuery.length > 0 && widgetIsActive) {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_BASE_API_URL}/search?q=${query}&limit=10`,
         );
@@ -38,7 +40,7 @@ export const SearchWidget = () => {
       return;
     };
     getUsers();
-  }, [query, widgetIsActive]);
+  }, [query, widgetIsActive, debouncedQuery]);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event && event.key === 'ArrowDown') {
