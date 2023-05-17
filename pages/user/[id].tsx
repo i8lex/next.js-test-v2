@@ -1,7 +1,7 @@
 import React from 'react';
 import { GetServerSideProps, NextPage } from 'next';
 import axios from 'axios';
-import { UserPageProps } from '../../type';
+import { UserPageProps } from '../../types';
 import Image from 'next/image';
 
 export const getServerSideProps: GetServerSideProps<UserPageProps> = async (
@@ -15,7 +15,9 @@ export const getServerSideProps: GetServerSideProps<UserPageProps> = async (
     );
     const user = response.data;
     return { props: { user } };
-  } catch (error) {}
+  } catch (error) {
+    return { props: { user: null, error: error.message } };
+  }
 };
 
 const UserPage: React.FC<UserPageProps> = ({ user, error }) => {

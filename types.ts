@@ -19,6 +19,6 @@ export type Address = {
 };
 
 export type UserPageProps = {
-  user?: User;
+  user: User | null;
   error?: string;
 };

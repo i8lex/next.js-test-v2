@@ -4,8 +4,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import clsx from 'clsx';
-import { GetUsers } from '../type';
-import { User } from '../type';
+import { GetUsers } from '../types';
+import { User } from '../types';
 
 export const SearchWidget = () => {
   const [query, setQuery] = useState('');
