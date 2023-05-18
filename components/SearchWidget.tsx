@@ -18,21 +18,31 @@ export const SearchWidget = () => {
   const router = useRouter();
   const [cache, setCache] = useState<Record<string, Array<User[]>>>({});
 
+  const abortController = useRef(new AbortController()); // Добавьте эту строку
+
   useEffect(() => {
     const getUsers = async (): Promise<GetUsers> => {
+      abortController.current.abort(); // Отмена предыдущего запроса
+      const controller = new AbortController();
+      abortController.current = controller;
+
+      const { signal } = controller;
+
       if (debouncedQuery.length < 1 && widgetIsActive) {
         if (cache['']) {
           setResults(cache['']);
         } else {
-          const response = await axios.get(
-            process.env.NEXT_PUBLIC_BASE_API_URL as string,
-            {
-              params: { limit: 10, skip: 0 },
-              string: '',
-            },
-          );
-          setResults(response.data.users);
-          setCache({ ...cache, '': response.data.users });
+          try {
+            const response = await axios.get(
+              process.env.NEXT_PUBLIC_BASE_API_URL as string,
+              {
+                params: { limit: 10, skip: 0 },
+                signal,
+              },
+            );
+            setResults(response.data.users);
+            setCache({ ...cache, '': response.data.users });
+          } catch (error) {}
         }
         return;
       }
@@ -40,18 +50,25 @@ export const SearchWidget = () => {
         if (cache[debouncedQuery]) {
           setResults(cache[debouncedQuery]);
         } else {
-          const response = await axios.get(
-            `${process.env.NEXT_PUBLIC_BASE_API_URL}/search?q=${debouncedQuery}&limit=10`,
-          );
-          setResults(response.data.users);
-          setCache({ ...cache, [debouncedQuery]: response.data.users });
+          try {
+            const response = await axios.get(
+              `${process.env.NEXT_PUBLIC_BASE_API_URL}/search?q=${debouncedQuery}&limit=10`,
+              { signal },
+            );
+            setResults(response.data.users);
+            setCache({ ...cache, [debouncedQuery]: response.data.users });
+          } catch (error) {}
         }
       }
       return;
     };
-    getUsers();
-  }, [widgetIsActive, debouncedQuery]);
 
+    getUsers();
+
+    return () => {
+      abortController.current.abort(); // Отмена запроса при размонтировании компонента
+    };
+  }, [widgetIsActive, debouncedQuery, cache]);
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event && event.key === 'ArrowDown') {
       event.preventDefault();
