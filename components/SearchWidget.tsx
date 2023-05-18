@@ -16,31 +16,41 @@ export const SearchWidget = () => {
   const [widgetIsActive, setWidgetIsActive] = useState(false);
   const inputRef = useRef(null);
   const router = useRouter();
+  const [cache, setCache] = useState<Record<string, Array<User[]>>>({});
 
   useEffect(() => {
     const getUsers = async (): Promise<GetUsers> => {
-      if (query.length < 1 && widgetIsActive) {
-        const response = await axios.get(
-          process.env.NEXT_PUBLIC_BASE_API_URL as string,
-          {
-            params: { limit: 10, skip: 0 },
-            string: '',
-          },
-        );
-        setResults(response.data.users);
-
+      if (debouncedQuery.length < 1 && widgetIsActive) {
+        if (cache['']) {
+          setResults(cache['']);
+        } else {
+          const response = await axios.get(
+            process.env.NEXT_PUBLIC_BASE_API_URL as string,
+            {
+              params: { limit: 10, skip: 0 },
+              string: '',
+            },
+          );
+          setResults(response.data.users);
+          setCache({ ...cache, '': response.data.users });
+        }
         return;
       }
       if (debouncedQuery.length > 0 && widgetIsActive) {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_BASE_API_URL}/search?q=${query}&limit=10`,
-        );
-        setResults(response.data.users);
+        if (cache[debouncedQuery]) {
+          setResults(cache[debouncedQuery]);
+        } else {
+          const response = await axios.get(
+            `${process.env.NEXT_PUBLIC_BASE_API_URL}/search?q=${debouncedQuery}&limit=10`,
+          );
+          setResults(response.data.users);
+          setCache({ ...cache, [debouncedQuery]: response.data.users });
+        }
       }
       return;
     };
     getUsers();
-  }, [query, widgetIsActive, debouncedQuery]);
+  }, [widgetIsActive, debouncedQuery]);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event && event.key === 'ArrowDown') {
