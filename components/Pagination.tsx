@@ -55,10 +55,7 @@ export const Pagination: FC<PaginationProps> = ({
           </div>
         ))}
         {currentPage === countOfPages - 1 ? (
-          <div
-            href={`/users?page=${Math.min(currentPage + 2, countOfPages)}`}
-            className="w-10 h-10 flex items-center justify-center border rounded-md text-base"
-          >
+          <div className="w-10 h-10 flex items-center justify-center border rounded-md text-base">
             <MdArrowForward />
           </div>
         ) : (
