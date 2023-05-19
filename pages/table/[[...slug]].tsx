@@ -73,33 +73,69 @@ const sortTable = () => {
                 <th className="py-2 px-4 border-b">NAME</th>
                 <th
                   onClick={() => handleSort('age')}
-                  className="py-2 px-4 border-b flex"
+                  className="py-2 px-4 border-b flex items-center"
                 >
-                  AGE{' '}
-                  {sortBy === 'age' ? (
-                    sortOrder === 'asc' ? (
-                      <MdArrowDropUp />
-                    ) : (
-                      <MdArrowDropDown />
-                    )
-                  ) : (
-                    <div>
-                      <MdArrowDropUp />
-                      <MdArrowDropDown />
+                  <div className="flex items-center">
+                    <p>AGE</p>
+                    <div className="relative h-12 w-6 flex flex-col items-center space-y-1 gap-1">
+                      {sortBy === 'age' ? (
+                        sortOrder === 'asc' ? (
+                          <MdArrowDropDown className="absolute bottom-2 h-6 w-6" />
+                        ) : (
+                          <MdArrowDropUp className="absolute top-2 h-6 w-6" />
+                        )
+                      ) : (
+                        <>
+                          <MdArrowDropUp className="absolute top-2 h-6 w-6" />
+                          <MdArrowDropDown className="absolute bottom-2 h-6 w-6" />
+                        </>
+                      )}
                     </div>
-                  )}
+                  </div>
                 </th>
                 <th
                   onClick={() => handleSort('weight')}
                   className="py-2 px-4 border-b"
                 >
-                  WEIGHT
+                  <div className="flex items-center">
+                    <p>WEIGHT</p>
+                    <div className="relative h-12 w-6 flex flex-col items-center space-y-1 gap-1">
+                      {sortBy === 'weight' ? (
+                        sortOrder === 'asc' ? (
+                          <MdArrowDropDown className="absolute bottom-2 h-6 w-6" />
+                        ) : (
+                          <MdArrowDropUp className="absolute top-2 h-6 w-6" />
+                        )
+                      ) : (
+                        <>
+                          <MdArrowDropUp className="absolute top-2 h-6 w-6" />
+                          <MdArrowDropDown className="absolute bottom-2 h-6 w-6" />
+                        </>
+                      )}
+                    </div>
+                  </div>
                 </th>
                 <th
                   onClick={() => handleSort('height')}
                   className="py-2 px-4 border-b"
                 >
-                  HEIGHT
+                  <div className="flex items-center">
+                    <p>HEIGHT</p>
+                    <div className="relative h-12 w-6 flex flex-col items-center space-y-1 gap-1">
+                      {sortBy === 'height' ? (
+                        sortOrder === 'asc' ? (
+                          <MdArrowDropDown className="absolute bottom-2 h-6 w-6" />
+                        ) : (
+                          <MdArrowDropUp className="absolute top-2 h-6 w-6" />
+                        )
+                      ) : (
+                        <>
+                          <MdArrowDropUp className="absolute top-2 h-6 w-6" />
+                          <MdArrowDropDown className="absolute bottom-2 h-6 w-6" />
+                        </>
+                      )}
+                    </div>
+                  </div>
                 </th>
               </tr>
             </thead>
