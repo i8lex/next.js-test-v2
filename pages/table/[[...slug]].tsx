@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import { User, GetUsers } from '../../types';
@@ -72,9 +73,21 @@ const sortTable = () => {
                 <th className="py-2 px-4 border-b">NAME</th>
                 <th
                   onClick={() => handleSort('age')}
-                  className="py-2 px-4 border-b"
+                  className="py-2 px-4 border-b flex"
                 >
-                  AGE
+                  AGE{' '}
+                  {sortBy === 'age' ? (
+                    sortOrder === 'asc' ? (
+                      <MdArrowDropUp />
+                    ) : (
+                      <MdArrowDropDown />
+                    )
+                  ) : (
+                    <div>
+                      <MdArrowDropUp />
+                      <MdArrowDropDown />
+                    </div>
+                  )}
                 </th>
                 <th
                   onClick={() => handleSort('weight')}
