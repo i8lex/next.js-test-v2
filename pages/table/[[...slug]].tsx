@@ -36,7 +36,6 @@ const sortTable = () => {
 
       if (sortBy) {
         if (sortOrder === 'desc') {
-
           setUsers(response.data.users.sort((a, b) => a[sortBy] - b[sortBy]));
         }
         if (sortOrder === 'asc') {
