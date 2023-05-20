@@ -34,27 +34,13 @@ const sortTable = () => {
         },
       );
 
-      if (sortBy === 'age') {
+      if (sortBy) {
         if (sortOrder === 'desc') {
           console.log(sortOrder);
-          setUsers(response.data.users.sort((a, b) => a.age - b.age));
+          setUsers(response.data.users.sort((a, b) => a[sortBy] - b[sortBy]));
         }
         if (sortOrder === 'asc') {
-          setUsers(response.data.users.sort((a, b) => b.age - a.age));
-        }
-      } else if (sortBy === 'weight') {
-        if (sortOrder === 'desc') {
-          setUsers(response.data.users.sort((a, b) => a.weight - b.weight));
-        }
-        if (sortOrder === 'asc') {
-          setUsers(response.data.users.sort((a, b) => b.weight - a.weight));
-        }
-      } else if (sortBy === 'height') {
-        if (sortOrder === 'desc') {
-          setUsers(response.data.users.sort((a, b) => a.height - b.height));
-        }
-        if (sortOrder === 'asc') {
-          setUsers(response.data.users.sort((a, b) => b.height - a.height));
+          setUsers(response.data.users.sort((a, b) => b[sortBy] - a[sortBy]));
         }
       } else {
         setUsers(response.data.users);
