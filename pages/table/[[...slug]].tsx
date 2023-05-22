@@ -58,7 +58,10 @@ const sortTable = () => {
           }
         }
       } else {
-        setUsers(response.data.users);
+        await router.push({
+          pathname: process.env.BASE_API_URL,
+          query: { sortBy: 'id', sortOrder: 'asc' },
+        });
       }
     };
     getUsers();
