@@ -49,8 +49,8 @@ const Cart: React.FC = () => {
                 leaveTo="opacity-0 translate-y-1"
               >
                 <Popover.Panel className="absolute right-0 z-10 mt-3 w-screen max-w-sm  transform px-4 sm:px-0 lg:max-w-3xl">
-                  <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                    <ul className="relative flex flex-col gap-8 bg-white p-7 overflow-scroll">
+                  <div className="overflow-scroll max-h-96  rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                    <ul className="relative flex flex-col gap-8 bg-white p-7 ">
                       {cartItems.map((item) => (
                         <li
                           key={item.id}
@@ -61,7 +61,7 @@ const Cart: React.FC = () => {
                               {item.title}
                             </p>
                             <p className="text-sm text-gray-500">
-                              {item.price}
+                              ${item.price}
                             </p>
                           </div>
                         </li>
@@ -76,7 +76,7 @@ const Cart: React.FC = () => {
                           Clear cart
                         </button>
                       ) : (
-                        <p className="text-gray-600 mb-6">Cart is empty </p>
+                        <p className="text-gray-600 mb-6">IT'S EMPTY</p>
                       )}
                     </div>
                   </div>
