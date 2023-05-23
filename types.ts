@@ -4,6 +4,9 @@ export type User = {
   lastName: string;
   image: string;
   address: Address;
+  age: string;
+  weight: string;
+  height: string;
 };
 
 export type GetUsers = {
