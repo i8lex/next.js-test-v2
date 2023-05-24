@@ -40,7 +40,7 @@ const ProductGrid: React.FC = () => {
       hasMore={hasMore}
       loader={<h2>Loading...</h2>}
     >
-      <div className="grid grid-cols-3 gap-4 mt-8">
+      <div className="grid grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
         {products.map((product) => (
           <Product
             key={product.id}

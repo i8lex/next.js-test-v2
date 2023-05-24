@@ -8,7 +8,7 @@ const Shop: React.FC = () => {
     <CartContextProvider>
       <section className="container mx-auto p-4 mt-10">
         <Cart />
-        <h1 className="text-2xl font-bold">Mini Shop</h1>
+        <h1 className="text-2xl font-bold mb-8">Mini Shop</h1>
         <ProductsGrid />
       </section>
     </CartContextProvider>
