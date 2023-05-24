@@ -1,16 +1,16 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useMemo } from 'react';
 
-interface CartItem {
+type CartItem = {
   id: number;
   title: string;
   price: number;
-}
+};
 
-interface CartContextData {
+type CartContextData = {
   cartItems: CartItem[];
   addToCart: (item: CartItem) => void;
   clearCart: () => void;
-}
+};
 
 export const CartContext = createContext<CartContextData>({
   cartItems: [],
@@ -29,9 +29,11 @@ export const CartContextProvider: React.FC = ({ children }) => {
     setCartItems([]);
   };
 
+  const contextValue = useMemo(() => {
+    return { cartItems, addToCart, clearCart };
+  }, [cartItems]);
+
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, clearCart }}>
-      {children}
-    </CartContext.Provider>
+    <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>
   );
 };
