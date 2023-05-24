@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Product from './Product';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { Transition } from '@headlessui/react';
+import Loader from './Loader';
 
 type ProductData = {
   id: number;
@@ -28,9 +30,7 @@ const ProductGrid: React.FC = () => {
       setProducts((prevProducts) => [...prevProducts, ...newProducts]);
       setPage((prevPage) => prevPage + 1);
       setHasMore(newProducts.length > 0);
-    } catch (error) {
-      console.log('Error fetching products:', error);
-    }
+    } catch (error) {}
   };
 
   return (
@@ -38,17 +38,29 @@ const ProductGrid: React.FC = () => {
       dataLength={products.length}
       next={fetchProducts}
       hasMore={hasMore}
-      loader={<h2>Loading...</h2>}
+      loader={<Loader />}
     >
-      <div className="grid grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 p-12 gap-6">
-        {products.map((product) => (
-          <Product
-            key={product.id}
-            id={product.id}
-            title={product.title}
-            image={product.image}
-            price={product.price}
-          />
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 p-12 gap-6">
+        {products.map((product, index) => (
+          <Transition
+            key={index}
+            appear={true}
+            show={true}
+            enter="transition ease-out duration-300"
+            enterFrom="opacity-0 scale-95"
+            enterTo="opacity-100 scale-100"
+            leave="transition ease-in duration-250"
+            leaveFrom="opacity-100 scale-100"
+            leaveTo="opacity-0 scale-95"
+          >
+            <Product
+              key={index}
+              id={product.id}
+              title={product.title}
+              image={product.image}
+              price={product.price}
+            />
+          </Transition>
         ))}
       </div>
     </InfiniteScroll>

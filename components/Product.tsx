@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { CartContext } from '../contexts/CartContext';
 import Image from 'next/image';
+import { Transition } from '@headlessui/react';
 
 type ProductProps = {
   id: number;
@@ -19,23 +20,20 @@ const Product: React.FC<ProductProps> = ({ id, title, price, image }) => {
   return (
     <div className="@container p-6 flex hover:scale-105 transition ease-in-out delay-150 flex-col border rounded-lg  shadow-lg  justify-between  items-center">
       <div className="flex flex-wrap  gap-6 justify-between w-full mb-6">
-        <div className="flex flex-col justify-between h-80 flex-1 w-1/2">
+        <div className="flex flex-col justify-between h-80  flex-1 w2/5">
           <h3 className=" font-bold text-lg whitespace-break-spaces">
             {title}
           </h3>
           <p className="text-gray-500 text-2xl">Price: ${price}</p>
         </div>
-        <div className="-z-10 relative flex-1 justify-center w-1/2">
+        <div className="-z-10 relative justify-center flex-1 w-3/5">
           <Image
             priority={true}
             src={image}
             alt={title}
-            // width={150}
-            // height={150}
-            objectFit="contain"
             fill={true}
-            // layout="contain"
-            // objectFit="contain"
+            sizes={100}
+            className="object-contain"
           />
         </div>
       </div>

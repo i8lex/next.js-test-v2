@@ -54,9 +54,9 @@ const Cart: React.FC = () => {
                 <Popover.Panel className="absolute right-0 z-10 mt-3 w-screen max-w-sm  transform px-4 sm:px-0 lg:max-w-3xl">
                   <div className="overflow-scroll max-h-96  rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                     <ul className="relative flex flex-col gap-8 bg-gray-100 p-7 ">
-                      {cartItems.map((item) => (
+                      {cartItems.map((item, index) => (
                         <li
-                          key={item.id}
+                          key={index}
                           className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                         >
                           <div className="ml-4">
