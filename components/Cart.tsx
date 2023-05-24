@@ -53,7 +53,7 @@ const Cart: React.FC = () => {
               >
                 <Popover.Panel className="absolute right-0 z-10 mt-3 w-screen max-w-sm  transform px-4 sm:px-0 lg:max-w-3xl">
                   <div className="overflow-scroll max-h-96  rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                    <ul className="relative flex flex-col gap-8 bg-white p-7 ">
+                    <ul className="relative flex flex-col gap-8 bg-gray-100 p-7 ">
                       {cartItems.map((item) => (
                         <li
                           key={item.id}
@@ -69,19 +69,19 @@ const Cart: React.FC = () => {
                           </div>
                         </li>
                       ))}
+                      <li className="flex justify-center">
+                        {cartItems.length ? (
+                          <button
+                            className="mt-2 bg-gray-500 text-orange-300 px-4 py-2 rounded"
+                            onClick={clearCart}
+                          >
+                            Clear cart
+                          </button>
+                        ) : (
+                          <p className="text-gray-600">IT'S EMPTY</p>
+                        )}
+                      </li>
                     </ul>
-                    <div className="bg-white flex justify-center">
-                      {cartItems.length ? (
-                        <button
-                          className=" mt-2 bg-gray-500 text-orange-300 px-4 py-2 rounded mb-6"
-                          onClick={clearCart}
-                        >
-                          Clear cart
-                        </button>
-                      ) : (
-                        <p className="text-gray-600 mb-6">IT'S EMPTY</p>
-                      )}
-                    </div>
                   </div>
                 </Popover.Panel>
               </Transition>
