@@ -1,7 +1,8 @@
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment, useContext, useState } from 'react';
 import { CartContext } from '../contexts/CartContext';
 import Image from 'next/image';
 import { Transition } from '@headlessui/react';
+import Loader from './Loader';
 
 type ProductProps = {
   id: number;
@@ -12,9 +13,15 @@ type ProductProps = {
 
 const Product: React.FC<ProductProps> = ({ id, title, price, image }) => {
   const { addToCart } = useContext(CartContext);
+  const [isImageLoading, setIsImageLoading] = useState(true);
 
   const handleAddToCart = () => {
     addToCart({ id, title, price });
+  };
+
+  const handleLoadingComplete = () => {
+    setIsImageLoading(false);
+    console.log(isImageLoading);
   };
 
   return (
@@ -26,13 +33,15 @@ const Product: React.FC<ProductProps> = ({ id, title, price, image }) => {
           </h3>
           <p className="text-gray-500 text-2xl">Price: ${price}</p>
         </div>
-        <div className="-z-10 relative justify-center flex-1 w-3/5">
+        <div className="-z-10 relative justify-center flex-1">
+          {isImageLoading ? <Loader /> : null}
           <Image
             priority={true}
             src={image}
             alt={title}
             fill={true}
             sizes={100}
+            onLoadingComplete={handleLoadingComplete}
             className="object-contain"
           />
         </div>

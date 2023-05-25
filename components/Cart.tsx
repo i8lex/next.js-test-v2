@@ -2,7 +2,11 @@ import React, { useContext, useState } from 'react';
 import { MdShoppingCart } from 'react-icons/md';
 import { CartContext } from '../contexts/CartContext';
 import { Popover, Transition } from '@headlessui/react';
-import { ChevronDownIcon, ShoppingCartIcon } from '@heroicons/react/24/outline';
+import {
+  ChevronDownIcon,
+  ShoppingCartIcon,
+  CheckIcon,
+} from '@heroicons/react/24/outline';
 import { Fragment } from 'react';
 
 const Cart: React.FC = () => {
@@ -37,8 +41,8 @@ const Cart: React.FC = () => {
                 </div>
 
                 <ChevronDownIcon
-                  className={`${open ? '' : 'text-opacity-70'}
-                  ml-2 h-5 w-5 text-orange-300 transition duration-150 ease-in-out group-hover:text-opacity-80`}
+                  className={`${open ? '' : 'text-opacity-70 animate-bounce'}
+                  ml-2 h-5 w-5 font-bold text-orange-500 transition duration-150 ease-in-out group-hover:text-opacity-80`}
                   aria-hidden="true"
                 />
               </Popover.Button>
@@ -52,8 +56,8 @@ const Cart: React.FC = () => {
                 leaveTo="opacity-0 translate-y-1"
               >
                 <Popover.Panel className="absolute right-0 z-10 mt-3 w-screen max-w-sm  transform px-4 sm:px-0 lg:max-w-3xl">
-                  <div className="overflow-scroll max-h-96  rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                    <ul className="relative flex flex-col gap-8 bg-gray-100 p-7 ">
+                  <div className="flex overflow-scroll max-h-96 bg-gray-100 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                    <ul className="relative flex flex-col flex-1 gap-8 p-7">
                       {cartItems.map((item, index) => (
                         <li
                           key={index}
@@ -69,19 +73,38 @@ const Cart: React.FC = () => {
                           </div>
                         </li>
                       ))}
-                      <li className="flex justify-center">
+                      <li className="flex justify-center align-center">
                         {cartItems.length ? (
                           <button
-                            className="mt-2 bg-gray-500 text-orange-300 px-4 py-2 rounded"
+                            className="mt-2 bg-gray-500 text-orange-300 px-4 py-2 rounded shadow-lg mb-4"
                             onClick={clearCart}
                           >
                             Clear cart
                           </button>
                         ) : (
-                          <p className="text-gray-600">IT'S EMPTY</p>
+                          <Transition
+                            appear={true}
+                            show={true}
+                            enter="transition ease-out duration-500"
+                            enterFrom="transform translate-x-50 opacity-0 scale-75"
+                            enterTo="transform translate-x-0 opacity-100 scale-105"
+                            leave="transition ease-in duration-450"
+                            leaveFrom="opacity-100 scale-100"
+                            leaveTo="opacity-0 scale-95"
+                          >
+                            <p className="text-gray-600">IT'S EMPTY</p>
+                          </Transition>
                         )}
                       </li>
                     </ul>
+                    {cartItems.length ? (
+                      <div className="flex flex-col flex-1 justify-center align-center">
+                        <button className="relative mt-2 shadow-lg bg-white border-gray-500 text-orange-300 text-lg font-bold pl-4 py-2 pr-16 rounded-lg self-center ">
+                          Order
+                          <CheckIcon className="absolute bottom-0 right-0 h-16 w-16 text-green-300 text-shadow-lg  animate-bounce" />
+                        </button>
+                      </div>
+                    ) : null}
                   </div>
                 </Popover.Panel>
               </Transition>
