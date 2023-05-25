@@ -6,6 +6,15 @@ module.exports = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    extend: {
+      filter: {
+        check: 'drop-shadow(0 0px 1px rgba(255, 255, 255, 1))',
+        titleShadow: 'drop-shadow(2px 2px 1px rgba(125,125,125,1))',
+      },
+      boxShadow: {
+        check: '0 2px 4px 0 rgba(0, 0, 0, 0.10)',
+      },
+    },
     container: {
       center: true,
       padding: '2rem',
@@ -18,18 +27,18 @@ module.exports = {
       xl: '1440px',
     },
     animation: {
-      text: 'text 1s ease-in',
+      text: 'text 5s ease infinite',
       bounce: 'bounce 1s infinite',
       spin: 'spin 1s infinite',
     },
     keyframes: {
       text: {
         '0%, 100%': {
-          'background-size': '200% 200%',
+          'background-size': '200% 100%',
           'background-position': 'right center',
         },
         '50%': {
-          'background-size': '100% 100%',
+          'background-size': '250% 100%',
           'background-position': 'left center',
         },
       },
@@ -50,5 +59,8 @@ module.exports = {
     },
   },
 
-  plugins: [require('@tailwindcss/container-queries')],
+  plugins: [
+    require('@tailwindcss/container-queries'),
+    require('tailwindcss-filters'),
+  ],
 };

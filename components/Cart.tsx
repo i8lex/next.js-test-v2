@@ -34,7 +34,7 @@ const Cart: React.FC = () => {
 
                   <div className="z-10 cursor-pointer absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  text-7xl text-gray-600">
                     <ShoppingCartIcon
-                      className="h-16 w-16"
+                      className="h-16 w-16 filter-titleShadow"
                       onClick={handleCartClick}
                     />
                   </div>
@@ -42,7 +42,7 @@ const Cart: React.FC = () => {
 
                 <ChevronDownIcon
                   className={`${open ? '' : 'text-opacity-70 animate-bounce'}
-                  ml-2 h-5 w-5 font-bold text-orange-500 transition duration-150 ease-in-out group-hover:text-opacity-80`}
+                  ml-2 h-5 w-5 filter-titleShadow font-bold text-orange-500 transition duration-150 ease-in-out group-hover:text-opacity-80`}
                   aria-hidden="true"
                 />
               </Popover.Button>
@@ -73,14 +73,20 @@ const Cart: React.FC = () => {
                           </div>
                         </li>
                       ))}
-                      <li className="flex justify-center align-center">
+                      <li className="flex justify-center align-center gap-6">
                         {cartItems.length ? (
-                          <button
-                            className="mt-2 bg-gray-500 text-orange-300 px-4 py-2 rounded shadow-lg mb-4"
-                            onClick={clearCart}
-                          >
-                            Clear cart
-                          </button>
+                          <>
+                            <button
+                              className="mt-2 bg-gray-500 text-orange-300 px-4 py-2 rounded shadow-lg mb-4"
+                              onClick={clearCart}
+                            >
+                              Clear cart
+                            </button>
+                            <button className="relative mt-2 shadow-lg hover:scale-105 bg-white border-gray-500 text-orange-300 text-lg font-bold pl-4 py-2 pr-16 rounded self-center mb-4">
+                              Order
+                              <CheckIcon className="absolute bottom-0 right-0 h-12 w-12 text-green-300 text-shadow-2xl filter-check z-500 animate-bounce" />
+                            </button>
+                          </>
                         ) : (
                           <Transition
                             appear={true}
@@ -97,14 +103,6 @@ const Cart: React.FC = () => {
                         )}
                       </li>
                     </ul>
-                    {cartItems.length ? (
-                      <div className="flex flex-col flex-1 justify-center align-center">
-                        <button className="relative mt-2 shadow-lg bg-white border-gray-500 text-orange-300 text-lg font-bold pl-4 py-2 pr-16 rounded-lg self-center ">
-                          Order
-                          <CheckIcon className="absolute bottom-0 right-0 h-16 w-16 text-green-300 text-shadow-lg  animate-bounce" />
-                        </button>
-                      </div>
-                    ) : null}
                   </div>
                 </Popover.Panel>
               </Transition>

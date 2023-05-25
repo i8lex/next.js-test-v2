@@ -25,7 +25,7 @@ const Product: React.FC<ProductProps> = ({ id, title, price, image }) => {
   };
 
   return (
-    <div className="@container p-6 flex hover:scale-105 transition ease-in-out delay-150 flex-col border rounded-lg  shadow-lg  justify-between  items-center">
+    <div className="@container p-6 flex hover:scale-105 transition ease-in-out delay-150 flex-col border rounded-lg shadow-lg  justify-between  items-center">
       <div className="flex flex-wrap  gap-6 justify-between w-full mb-6">
         <div className="flex flex-col justify-between h-80  flex-1 w2/5">
           <h3 className=" font-bold text-lg whitespace-break-spaces">
