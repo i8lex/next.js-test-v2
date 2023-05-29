@@ -29,7 +29,8 @@ const ProductGrid: React.FC = () => {
       setProducts((prevProducts) => [...prevProducts, ...newProducts]);
       setPage((prevPage) => prevPage + 1);
       setHasMore(newProducts.length > 0);
-    } catch (error) {}
+    } catch (error) {
+    }
   };
 
   return (

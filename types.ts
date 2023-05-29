@@ -7,6 +7,7 @@ export type User = {
   age: string;
   weight: string;
   height: string;
+  [key: string]: string | number | Object;
 };
 
 export type GetUsers = {

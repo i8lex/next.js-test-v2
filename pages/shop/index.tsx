@@ -1,5 +1,5 @@
 import React from 'react';
-import { CartContextProvider } from '../../contexts/CartContext';
+import { CartContextProvider } from '@/contexts/CartContext';
 import ProductsGrid from '../../components/ProductsGrid';
 import Cart from '../../components/Cart';
 import { Transition } from '@headlessui/react';
@@ -19,8 +19,8 @@ const Shop: React.FC = () => {
           leaveFrom="opacity-100 scale-100"
           leaveTo="opacity-0 scale-95"
         >
-          <h1 className="text-4xl font-bold mb-8 animate-text filter-titleShadow bg-gradient-to-r from-slate-950 via-slate-100 to-gray-950 bg-clip-text text-2xl font-black text-transparent">
-            Mini Shop
+          <h1 className="mb-8 animate-text filter-titleShadow bg-gradient-to-r from-slate-950 via-slate-100 to-gray-950 bg-clip-text text-2xl font-black text-transparent">
+          Mini Shop
           </h1>
         </Transition>
         <ProductsGrid />

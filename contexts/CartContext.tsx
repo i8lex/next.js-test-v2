@@ -24,8 +24,8 @@ export const CartContext = createContext<CartContextData>({
   removeItem: () => {},
 });
 
-// @ts-ignore
-export const CartContextProvider: React.FC = ({ children }) => {
+
+export const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setCartOpen] = useState(false);
 
