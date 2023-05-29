@@ -37,7 +37,7 @@ const ProductGrid: React.FC = () => {
       dataLength={products.length}
       next={fetchProducts}
       hasMore={hasMore}
-      // loader={<Loader />}
+      loader={<p>Loader...</p>}
     >
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 p-12 gap-6">
         {products.map((product, index) => (
@@ -54,7 +54,6 @@ const ProductGrid: React.FC = () => {
           >
             <Product
               key={index}
-              id={product.id}
               title={product.title}
               image={product.image}
               price={product.price}

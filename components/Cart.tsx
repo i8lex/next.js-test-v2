@@ -6,15 +6,12 @@ import {
   ChevronDownIcon,
   ShoppingCartIcon,
   CheckIcon,
+  TrashIcon,
 } from '@heroicons/react/24/outline';
 import { Fragment } from 'react';
 
 const Cart: React.FC = () => {
-  const [isCartOpen, setCartOpen] = useState(false);
-  const { cartItems, clearCart } = useContext(CartContext);
-  const handleCartClick = () => {
-    setCartOpen(!isCartOpen);
-  };
+  const { cartItems, clearCart, toggleCart, removeItem } = useContext(CartContext);
 
   return (
     <div className="relative flex justify-end z-50">
@@ -35,7 +32,7 @@ const Cart: React.FC = () => {
                   <div className="z-10 cursor-pointer absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  text-7xl text-gray-600">
                     <ShoppingCartIcon
                       className="h-16 w-16 filter-titleShadow"
-                      onClick={handleCartClick}
+                      onClick={toggleCart}
                     />
                   </div>
                 </div>
@@ -63,13 +60,14 @@ const Cart: React.FC = () => {
                           key={index}
                           className="-m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                         >
-                          <div className="ml-4">
+                          <div className="flex gap-2 ml-4">
                             <p className="text-sm font-medium text-gray-900">
                               {item.title}
                             </p>
                             <p className="text-sm text-gray-500">
                               ${item.price}
                             </p>
+                            <TrashIcon className="h-6 w-6 text-gray-600" onClick={()=> removeItem(item.id) }/>
                           </div>
                         </li>
                       ))}
