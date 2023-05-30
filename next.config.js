@@ -7,7 +7,7 @@ const nextConfig = {
     appDir: true,
   },
   images: {
-    domains: ["robohash.org"],
+    domains: ['robohash.org', 'fakestoreapi.com'],
   },
 };
 

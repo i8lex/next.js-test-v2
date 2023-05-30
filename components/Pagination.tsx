@@ -2,7 +2,7 @@ import Link from 'next/link';
 import React, { FC } from 'react';
 import clsx from 'clsx';
 import { MdArrowForward, MdArrowBack } from 'react-icons/md';
-import { getPaginationData } from '../utils/paginationUtils';
+import { getPaginationData } from '@/utils/paginationUtils';
 
 type PaginationProps = {
   currentPage: number;

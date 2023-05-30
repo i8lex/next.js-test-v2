@@ -1,7 +1,7 @@
 import React from 'react';
-import { GetServerSideProps, NextPage } from 'next';
+import { GetServerSideProps } from 'next';
 import axios from 'axios';
-import { UserPageProps } from '../../types';
+import { UserPageProps } from '@/types';
 import Image from 'next/image';
 
 export const getServerSideProps: GetServerSideProps<UserPageProps> = async (
@@ -16,7 +16,7 @@ export const getServerSideProps: GetServerSideProps<UserPageProps> = async (
     const user = response.data;
     return { props: { user } };
   } catch (error) {
-    return { props: { user: null, error: error.message } };
+    return { props: { user: null } };
   }
 };
 

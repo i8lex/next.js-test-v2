@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import { Pagination } from '../../components/Pagination';
-import { SearchWidget } from '../../components/SearchWidget';
+import { Pagination } from '@/components/Pagination';
+import { SearchWidget } from '@/components/SearchWidget';
 import Image from 'next/image';
 import Link from 'next/link';
-import { User, GetUsers } from '../../types';
+import { User, GetUsers } from '@/types';
 
 const Users = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -18,7 +18,7 @@ const Users = () => {
   const countOfPages: number = Math.ceil(totalCountOfUser / limitUserOnPage);
 
   useEffect(() => {
-    // if (page) {
+
     const pageNum: number = pageToNum - 1;
     const skipUsersOnApi = pageNum * limitUserOnPage;
     const getUsers = async (): Promise<GetUsers> => {
@@ -35,7 +35,7 @@ const Users = () => {
     };
 
     getUsers();
-    // };
+
   }, [page]);
 
   return (

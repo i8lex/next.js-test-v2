@@ -4,25 +4,25 @@ import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import clsx from 'clsx';
-import { GetUsers } from '../types';
-import { User } from '../types';
-import { useDebounceValue } from '../hooks/useDebounceValue';
+import { GetUsers } from '@/types';
+import { User } from '@/types';
+import { useDebounceValue } from '@/hooks/useDebounceValue';
 
 export const SearchWidget = () => {
   const [query, setQuery] = useState('');
   const debouncedQuery = useDebounceValue(query, 500);
-  const [results, setResults] = useState<Array<User[]>>([]);
+  const [results, setResults] = useState<User[]>([]);
   const [selectedResult, setSelectedResult] = useState(0);
   const [widgetIsActive, setWidgetIsActive] = useState(false);
   const inputRef = useRef(null);
   const router = useRouter();
-  const [cache, setCache] = useState<Record<string, Array<User[]>>>({});
+  const [cache, setCache] = useState<Record<string, User[]>>({});
 
   const abortController = useRef(new AbortController()); // Добавьте эту строку
 
   useEffect(() => {
-    const getUsers = async (): Promise<GetUsers> => {
-      abortController.current.abort(); // Отмена предыдущего запроса
+    const getUsers = async (): Promise<GetUsers | void>=> {
+      abortController.current.abort();
       const controller = new AbortController();
       abortController.current = controller;
 
@@ -63,10 +63,10 @@ export const SearchWidget = () => {
       return;
     };
 
-    getUsers();
+    getUsers().then();
 
     return () => {
-      abortController.current.abort(); // Отмена запроса при размонтировании компонента
+      abortController.current.abort();
     };
   }, [widgetIsActive, debouncedQuery, cache]);
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -81,8 +81,8 @@ export const SearchWidget = () => {
       setSelectedResult((prev) => (prev !== -1 ? Math.max(prev - 1, 0) : -1));
     } else if (event.key === 'Enter' && selectedResult !== -1) {
       event.preventDefault();
-      const user = results[selectedResult] as { id: string };
-      router.push(`/user/${user.id}`);
+      const user = results[selectedResult] as User;
+      router.push(`/user/${user.id}`).then();
     }
   };
 

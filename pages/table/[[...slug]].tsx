@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import { User, GetUsers } from '../../types';
+import { User, GetUsers } from '@/types';
 
 const sortTable = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -11,7 +11,7 @@ const sortTable = () => {
   const sortOrder = router.query.sortOrder;
   const limitUserOnPage = 100;
 
-  const handleSort = (sortBy) => {
+  const handleSort = (sortBy: string) => {
     let newSortOrder;
     if (sortBy === router.query.sortBy) {
       newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
@@ -22,11 +22,11 @@ const sortTable = () => {
     router.push({
       pathname: process.env.BASE_API_URL,
       query: { sortBy: sortBy, sortOrder: newSortOrder },
-    });
+    }).then();
   };
 
   useEffect(() => {
-    const getUsers = async (): Promise<GetUsers> => {
+    const getUsers = async (): Promise<GetUsers | void> => {
       const response = await axios.get(
         process.env.NEXT_PUBLIC_BASE_API_URL as string,
         {
@@ -38,23 +38,25 @@ const sortTable = () => {
         if (sortOrder === 'desc') {
           if (sortBy === 'firstName') {
             setUsers(
-              response.data.users.sort((a, b) =>
+              response.data.users.sort((a: User, b: User) =>
                 b[sortBy].localeCompare(a[sortBy]),
               ),
             );
           } else {
-            setUsers(response.data.users.sort((a, b) => b[sortBy] - a[sortBy]));
+            // @ts-ignore
+            setUsers(response.data.users.sort((a: User, b: User) => b[sortBy] - a[sortBy]));
           }
         }
         if (sortOrder === 'asc') {
           if (sortBy === 'firstName') {
             setUsers(
-              response.data.users.sort((a, b) =>
+              response.data.users.sort((a: User, b: User) =>
                 a[sortBy].localeCompare(b[sortBy]),
               ),
             );
           } else {
-            setUsers(response.data.users.sort((a, b) => a[sortBy] - b[sortBy]));
+            // @ts-ignore
+            setUsers(response.data.users.sort((a: User, b: User) => a[sortBy] - b[sortBy]));
           }
         }
       } else {
@@ -64,7 +66,7 @@ const sortTable = () => {
         });
       }
     };
-    getUsers();
+    getUsers().then();
   }, [sortBy, sortOrder]);
 
   return (
